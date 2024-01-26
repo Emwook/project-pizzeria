@@ -90,6 +90,7 @@ const select = {
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
     }
     initAccordion(){
       const thisProduct = this;
@@ -151,20 +152,36 @@ const select = {
         for(let optionId in param.options) {
           // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
           const option = param.options[optionId];
-
+          let selectedImageClassName = paramId +'-'+ optionId;
+          console.log(selectedImageClassName);          
           if(formData.hasOwnProperty(paramId)){
             const formDataParam = formData[paramId];
             if(formDataParam.includes(optionId)){
               //console.log(optionId, paramId, ' is in this dish');
+              if(thisProduct.imageWrapper.hasOwnProperty(selectedImageClassName)){
+                console.log('there is a picture for this option: ',selectedImageClassName);
+
+                if(option.default){
+                  //console.log(optionId, 'is the defualt');
+                  //console.log('price stays the same');
+                }
+                else{
+                  console.log(optionId, 'is not the defualt');
+                  price += option.price;
+                  console.log('changed price to: ', price);
+                }
+              }
+              /*
               if(option.default){
                 //console.log(optionId, 'is the defualt');
-                console.log('price stays the same');
+                //console.log('price stays the same');
               }
               else{
-                //console.log(optionId, 'is not the defualt');
+                console.log(optionId, 'is not the defualt');
                 price += option.price;
                 console.log('changed price to: ', price);
               }
+              */
             }
             else{
               //console.log(optionId, paramId, ' is not in this dish');
@@ -175,7 +192,7 @@ const select = {
               }
               else{
                 //console.log(optionId, 'is not the defualt');
-                console.log('price stays the same');
+                //console.log('price stays the same');
               }
             }
           }
