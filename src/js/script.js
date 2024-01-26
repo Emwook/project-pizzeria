@@ -91,12 +91,16 @@ const select = {
         event.preventDefault();
 
         /* find active product (product that has active class) */
-        const activeProduct = thisProduct.element.querySelector(select.all.menuProductsActive); 
+        const products = document.querySelectorAll(select.all.menuProductsActive); 
 
         /* if there is active product and it's not thisProduct.element, remove class active from it */
-        if(activeProduct && activeProduct !== thisProduct.element){ 
+        for (let activeProduct of products){
+          if(activeProduct !== thisProduct.element){ 
+            console.log('active products: ',activeProduct);
             activeProduct.classList.remove('active');
+          }
         }
+        
         /* toggle active class on thisProduct.element */
         thisProduct.element.classList.toggle('active');
       });
