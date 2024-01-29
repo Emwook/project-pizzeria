@@ -147,53 +147,50 @@ const select = {
       for(let paramId in thisProduct.data.params) {
         // determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
         const param = thisProduct.data.params[paramId];
-        //console.log('param: ',paramId, param);
-        // for every option in this category
         for(let optionId in param.options) {
           // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
           const option = param.options[optionId];
-          let selectedImageClassName = paramId +'-'+ optionId;
-          console.log(selectedImageClassName);          
-          if(formData.hasOwnProperty(paramId)){
-            const formDataParam = formData[paramId];
-            if(formDataParam.includes(optionId)){
-              //console.log(optionId, paramId, ' is in this dish');
-              if(thisProduct.imageWrapper.hasOwnProperty(selectedImageClassName)){
-                console.log('there is a picture for this option: ',selectedImageClassName);
+          // set a name for the class used in img element
+          let selectedImageClassName = '.'+ paramId +'-'+ optionId;
+          const imageElement = thisProduct.imageWrapper.querySelector(selectedImageClassName);
 
-                if(option.default){
-                  //console.log(optionId, 'is the defualt');
-                  //console.log('price stays the same');
-                }
-                else{
-                  console.log(optionId, 'is not the defualt');
-                  price += option.price;
-                  console.log('changed price to: ', price);
-                }
-              }
-              /*
-              if(option.default){
-                //console.log(optionId, 'is the defualt');
-                //console.log('price stays the same');
-              }
-              else{
-                console.log(optionId, 'is not the defualt');
-                price += option.price;
-                console.log('changed price to: ', price);
-              }
-              */
+          // check if the ingredient is present in the form data
+          if (!formData.hasOwnProperty(paramId)) {
+            console.log('Ingredient not found in form data');
+            //brake the loop if it isnt
+            continue;
+          }
+
+          const formDataParam = formData[paramId];
+
+          // check if the form data has this option
+          if (formDataParam.includes(optionId)) {
+            // check if the option has an image
+            if (imageElement) {
+              //add 'active' class to the image
+              imageElement.classList.add('active');
+              console.log('Image set to active');
             }
-            else{
-              //console.log(optionId, paramId, ' is not in this dish');
-              if(option.default){
-                //console.log(optionId, 'is the defualt');
-                price -= option.price;
-                console.log('changed price to: ', price);
-              }
-              else{
-                //console.log(optionId, 'is not the defualt');
-                //console.log('price stays the same');
-              }
+
+            // check if it is a default option
+            if (!option.default) {
+              // increase the prrice
+              price += option.price;
+              console.log('Price increased by:', option.price, 'New price:', price);
+            }
+          } 
+          else {
+            // Check if the image element exists
+            if (imageElement) {
+              // remove the 'active' class
+              imageElement.classList.remove('active');
+            }
+
+            // check if the option is default
+            if (option.default) {
+              // decrease the price if so
+              price -= option.price;
+              console.log('Price decreased by:', option.price, 'New price:', price);
             }
           }
         }
