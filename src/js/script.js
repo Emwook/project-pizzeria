@@ -168,7 +168,7 @@ const select = {
             // check if the option has an image
             if (imageElement) {
               //add 'active' class to the image
-              imageElement.classList.add('active');
+              imageElement.classList.add(classNames.menuProduct.imageVisible);
               console.log('Image set to active');
             }
 
@@ -183,7 +183,7 @@ const select = {
             // Check if the image element exists
             if (imageElement) {
               // remove the 'active' class
-              imageElement.classList.remove('active');
+              imageElement.classList.remove(classNames.menuProduct.imageVisible);
             }
 
             // check if the option is default
