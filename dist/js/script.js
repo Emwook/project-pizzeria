@@ -3,7 +3,7 @@
 {
   'use strict';
 
-const select = {
+  const select = {
   templateOf: {
     menuProduct: "#template-menu-product",
     },
@@ -63,10 +63,8 @@ const select = {
       thisProduct.getElements();
       thisProduct.initAccordion();
       thisProduct.initOrderForm();
-      thisProduct.processOrder();
       thisProduct.initAmountWidget();
-
-       // console.log('new product: ', thisProduct);
+      thisProduct.processOrder();
     }
     renderInMenu(){
       const thisProduct = this;
@@ -108,7 +106,6 @@ const select = {
         /* if there is active product and it's not thisProduct.element, remove class active from it */
         for (let activeProduct of products){
           if(activeProduct !== thisProduct.element){ 
-             // console.log('active products: ',activeProduct);
             activeProduct.classList.remove('active');
           }
         }
@@ -119,7 +116,6 @@ const select = {
     }
     initOrderForm(){
       const thisProduct = this;
-      // // console.log('f1',thisProduct);
       thisProduct.form.addEventListener('submit', function(event){
         event.preventDefault();
         thisProduct.processOrder();
@@ -138,10 +134,8 @@ const select = {
     }
     processOrder(){
       const thisProduct = this;
-      // // console.log('f2',thisProduct);
 
       const formData = utils.serializeFormToObject(thisProduct.form);
-       // console.log('form data: ',formData);
       // set price to default price
       let price = thisProduct.data.price;
 
@@ -158,7 +152,6 @@ const select = {
 
           // check if the ingredient is present in the form data
           if (!formData.hasOwnProperty(paramId)) {
-             // console.log('Ingredient not found in form data');
             //brake the loop if it isnt
             continue;
           }
@@ -171,14 +164,12 @@ const select = {
             if (imageElement) {
               //add 'active' class to the image
               imageElement.classList.add(classNames.menuProduct.imageVisible);
-               // console.log('Image set to active');
             }
 
             // check if it is a default option
             if (!option.default) {
               // increase the prrice
               price += option.price;
-               // console.log('Price increased by:', option.price, 'New price:', price);
             }
           } 
           else {
@@ -192,11 +183,12 @@ const select = {
             if (option.default) {
               // decrease the price if so
               price -= option.price;
-               // console.log('Price decreased by:', option.price, 'New price:', price);
             }
           }
         }
       }
+    /* multiply price by amount */
+    price *= thisProduct.amountWidget.value;
     // update calculated price in the HTML
     thisProduct.priceElem.innerHTML = price;
     }
@@ -204,6 +196,7 @@ const select = {
       const thisProduct = this;
 
       thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
+      thisProduct.amountWidgetElem.addEventListener('updated', function(){thisProduct.processOrder();});
     }
   }
 
@@ -211,10 +204,13 @@ const select = {
     constructor(element){
       const thisWidget = this;
 
-       console.log('AmountWidget: ', thisWidget)
-       console.log('constructor arguments: ', element);
        thisWidget.getElements(element);
-       thisWidget.setValue(thisWidget.input.value);
+       if(thisWidget.input.value){
+        thisWidget.setValue(thisWidget.input.value);
+       }
+       else{
+        thisWidget.setValue(settings.amountWidget.defaultValue);
+       }
        thisWidget.initActions();
     }
     getElements(element){
@@ -225,17 +221,23 @@ const select = {
       thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
       thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
     }
+    announce(){
+      const thisWidget = this;
+  
+      const event = new Event('updated');
+      thisWidget.element.dispatchEvent(event);
+    }
     setValue(value){
       const thisWidget = this;
 
       const newValue = parseInt(value);
 
       /* [to do] add validiation */
-      thisWidget.value = newValue;
-      thisWidget.input.value = thisWidget.value;
-      if(thisWidget.value !== newValue && !isNaN(newValue) && newValue > settings.amountWidget.defaultMin && newValue < settings.amountWidget.defaultMax){
+      if(thisWidget.value !== newValue && !isNaN(newValue) && newValue >= settings.amountWidget.defaultMin && newValue <= settings.amountWidget.defaultMax){
         thisWidget.value = newValue;
+        thisWidget.announce();
       }
+      thisWidget.input.value = thisWidget.value;
     }
     initActions(){
       const thisWidget = this;
@@ -249,7 +251,6 @@ const select = {
     initMenu: function(){
       const thisApp = this;
 
-       // console.log('thisApp.data: ',thisApp.data);
 
       for(let productData in thisApp.data.products){
         new Product(productData, thisApp.data.products[productData]);
@@ -263,12 +264,7 @@ const select = {
     },
 
     init: function(){
-      const thisApp = this;
-       // console.log('*** App starting ***');
-       // console.log('thisApp:', thisApp);
-       // console.log('classNames:', classNames);
-       // console.log('settings:', settings);
-       // console.log('templates:', templates);
+      const thisApp = this; 
 
       thisApp.initData();
       thisApp.initMenu();
