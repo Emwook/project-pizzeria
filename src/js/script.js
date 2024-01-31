@@ -91,6 +91,7 @@
       thisProduct.initOrderForm();
       thisProduct.initAmountWidget();
       thisProduct.processOrder();
+      thisProduct.prepareCartProductParams();
     }
     renderInMenu(){
       const thisProduct = this;
@@ -231,6 +232,42 @@
       thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
       thisProduct.amountWidgetElem.addEventListener('updated', function(){thisProduct.processOrder();});
     }
+    prepareCartProductParams() {
+      const thisProduct = this;
+      const formData = utils.serializeFormToObject(thisProduct.form);
+      const params = [];
+    
+      for (let paramId in thisProduct.data.params) {
+        // determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
+        const param = thisProduct.data.params[paramId];
+    
+        // check if the ingredient is present in the form data
+        if (formData.hasOwnProperty(paramId)) {
+          // create an array for the current category if it doesn't exist
+          if (!params.includes(paramId)) {
+            params.push(paramId);
+          }
+    
+          for (let optionId in param.options) {
+            // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
+            const formDataParam = formData[paramId];
+    
+            // check if the option is selected
+            if (formDataParam.includes(optionId)) {
+              // add the option to the category in params array
+              if (!params[paramId]) {
+                params[paramId] = [];
+              }
+              params[paramId].push(optionId);
+            }
+          }
+        }
+      }
+    
+      console.log(params);
+      return params;
+    }
+    
     prepareCartProduct(){
       const thisProduct = this;
 
@@ -239,8 +276,7 @@
       productSummary.name = thisProduct.name;
       productSummary.amount = thisProduct.amount;
       productSummary.priceSingle = thisProduct.priceSingle;
-      productSummary.price = thisProduct.price;
-      productSummary.params = {};
+      //productSummary.price = thisProduct.price;
       return productSummary;
     }
     addToCart(){
@@ -323,7 +359,7 @@
     add(menuProduct){
       // const thisCart = this;
 
-      console.log('adding product: ', menuProduct);
+     console.log('adding product: ', menuProduct);
     }
 
   }
