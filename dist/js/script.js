@@ -91,7 +91,7 @@
       thisProduct.initOrderForm();
       thisProduct.initAmountWidget();
       thisProduct.processOrder();
-      thisProduct.prepareCartProductParams();
+      thisProduct.prepareCartProduct();
     }
     renderInMenu(){
       const thisProduct = this;
@@ -235,39 +235,35 @@
     prepareCartProductParams() {
       const thisProduct = this;
       const formData = utils.serializeFormToObject(thisProduct.form);
-      const params = [];
+      const params = {};
     
       for (let paramId in thisProduct.data.params) {
-        // determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
         const param = thisProduct.data.params[paramId];
-    
-        // check if the ingredient is present in the form data
+       
         if (formData.hasOwnProperty(paramId)) {
-          // create an array for the current category if it doesn't exist
-          if (!params.includes(paramId)) {
-            params.push(paramId);
+          if (!params[paramId]) {
+            params[paramId] = {
+              'label': param.label,
+              'options': {},
+            };
+            
           }
-    
+
           for (let optionId in param.options) {
-            // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
             const formDataParam = formData[paramId];
-    
-            // check if the option is selected
             if (formDataParam.includes(optionId)) {
-              // add the option to the category in params array
-              if (!params[paramId]) {
-                params[paramId] = [];
-              }
-              params[paramId].push(optionId);
+              const productLabel = thisProduct.id;
+              const dataProduct = dataSource.products[productLabel];
+              const dataParam = dataProduct.params[paramId];
+              const dataOption = dataParam.options[optionId].label;
+
+              params[paramId]['options'][optionId] = dataOption;
             }
           }
         }
       }
-    
-      console.log(params);
       return params;
     }
-    
     prepareCartProduct(){
       const thisProduct = this;
 
@@ -276,7 +272,10 @@
       productSummary.name = thisProduct.name;
       productSummary.amount = thisProduct.amount;
       productSummary.priceSingle = thisProduct.priceSingle;
-      //productSummary.price = thisProduct.price;
+      productSummary.price = thisProduct.price;
+      productSummary.params = {};
+      productSummary.params = thisProduct.prepareCartProductParams();
+      //console.log(productSummary);
       return productSummary;
     }
     addToCart(){
@@ -350,6 +349,8 @@
       thisCart.dom.wrapper = element;
 
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
+
+      thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
     }
     initActions(){
       const thisCart = this;
@@ -357,9 +358,18 @@
       thisCart.dom.toggleTrigger.addEventListener('click', function(){thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);})
     }
     add(menuProduct){
-      // const thisCart = this;
+      const thisCart = this;
+      //console.log(menuProduct);
 
-     console.log('adding product: ', menuProduct);
+      const generatedHTML = templates.cartProduct(menuProduct);
+
+      /* create element using utils.createElementFromHtml */
+      const generatedDOM = utils.createDOMFromHTML(generatedHTML);
+
+      /* add element to menu */
+      thisCart.dom.productList.appendChild(generatedDOM);
+
+     //console.log('adding product: ', menuProduct);
     }
 
   }
