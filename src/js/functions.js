@@ -49,6 +49,8 @@ Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
   return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
 });
 
-Handlebars.registerHelper('joinValues', function(input, options) {
+Handlebars.registerHelper('joinValues', function(input, options) { //BUGGED - NOT RETURNING A STRING OF JOINED VALUES
   return Object.values(input).join(options.fn(this));
 });
+
+

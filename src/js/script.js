@@ -251,14 +251,11 @@
               'label': param.label,
               'options': {},
             };
-            
           }
-
           for (let optionId in param.options) {
             const formDataParam = formData[paramId];
             if (formDataParam.includes(optionId)) {
               const productLabel = thisProduct.id;
-
               const url = settings.db.url + '/' + settings.db.products + '/' + productLabel;
               
               fetch(url)
@@ -267,12 +264,10 @@
                 })
                 .then(function (parsedResponse) {
                   const dataProduct = parsedResponse;
-                  
                   const dataParam = dataProduct.params[paramId];
-
                   const dataOption = dataParam.options[optionId].label;
-
                   params[paramId]['options'][optionId] = dataOption;
+                  
                 });
             }
           }
@@ -291,13 +286,11 @@
       productSummary.price = thisProduct.price;
       const params = thisProduct.prepareCartProductParams(); //change
       productSummary.params = params;
-      //console.log(params);
+      //console.log(productSummary);
       return productSummary;
     }
     addToCart(){
       const thisProduct = this;
-      //console.log(thisProduct);
-      //console.log(thisProduct.prepareCartProduct());
       app.cart.add(thisProduct.prepareCartProduct());
     }
   }
@@ -387,9 +380,7 @@
     }
     add(menuProduct){
       const thisCart = this;
-
-      const generatedHTML = templates.cartProduct(menuProduct);
-      //console.log(generatedHTML);
+      const generatedHTML = templates.cartProduct(menuProduct); // BUGGED - NOT GENERATING OPTIONS FOR THE ADDED PRODUCT
 
       /* create element using utils.createElementFromHtml */
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
@@ -478,7 +469,6 @@
       });
 
       thisCartProduct.dom.wrapper.dispatchEvent(event)
-      //console.log('removed!: ',event);
     }
     initActions(){
       const thisCartProduct = this;
@@ -513,7 +503,6 @@
           return rawResponse.json();
         })
         .then(function(parsedResponse){
-          //console.log('parsedResponse ',parsedResponse);
 
           //save parsedResponse at thisApp.data.products 
           thisApp.data.products = parsedResponse;
@@ -521,8 +510,6 @@
           //execute initMenu method
           thisApp.initMenu();
         });
-
-      //console.log('thisApp.data',JSON.stringify(thisApp.data));
 
     },
 
