@@ -50,7 +50,10 @@ Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
 });
 
 Handlebars.registerHelper('joinValues', function(input, options) { //BUGGED - NOT RETURNING A STRING OF JOINED VALUES
+  //console.log(Object.keys(input));
   return Object.values(input).join(options.fn(this));
 });
+
+
 
 

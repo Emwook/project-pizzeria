@@ -257,7 +257,6 @@
             if (formDataParam.includes(optionId)) {
               const productLabel = thisProduct.id;
               const url = settings.db.url + '/' + settings.db.products + '/' + productLabel;
-              
               fetch(url)
                 .then(function (rawResponse) {
                   return rawResponse.json();
@@ -267,7 +266,6 @@
                   const dataParam = dataProduct.params[paramId];
                   const dataOption = dataParam.options[optionId].label;
                   params[paramId]['options'][optionId] = dataOption;
-                  
                 });
             }
           }
@@ -286,7 +284,6 @@
       productSummary.price = thisProduct.price;
       const params = thisProduct.prepareCartProductParams(); //change
       productSummary.params = params;
-      //console.log(productSummary);
       return productSummary;
     }
     addToCart(){
@@ -364,6 +361,9 @@
       thisCart.dom.subtotalPrice = thisCart.dom.wrapper.querySelector(select.cart.subtotalPrice);
       thisCart.dom.totalNumber = thisCart.dom.wrapper.querySelector(select.cart.totalNumber);
       thisCart.dom.totalPrice = thisCart.dom.wrapper.querySelectorAll(select.cart.totalPrice);
+      thisCart.dom.form = thisCart.dom.wrapper.querySelector(select.cart.form);
+      thisCart.dom.phone = thisCart.dom.wrapper.querySelector(select.cart.phone);
+      thisCart.dom.address = thisCart.dom.wrapper.querySelector(select.cart.address);
     }
     initActions(){
       const thisCart = this;
@@ -377,10 +377,14 @@
       thisCart.dom.productList.addEventListener('remove', function(){
         thisCart.remove(event.detail.cartProduct);
       })
+      thisCart.dom.form.addEventListener('submit',function(){
+        event.preventDefault();
+        thisCart.sendOrder();
+      })
     }
     add(menuProduct){
       const thisCart = this;
-      const generatedHTML = templates.cartProduct(menuProduct); // BUGGED - NOT GENERATING OPTIONS FOR THE ADDED PRODUCT
+      const generatedHTML = templates.cartProduct(menuProduct); // BUGGED - NOT GENERATING OPTIONS FOR THE ADDED PRODUCT, NO IDEA WHY
 
       /* create element using utils.createElementFromHtml */
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
@@ -412,6 +416,7 @@
       for(let totalPriceDOM of thisCart.dom.totalPrice){
         totalPriceDOM.innerHTML = thisCart.totalPrice;
       }
+      thisCart.deliveryFee = deliveryFee;
       
     }
     remove(cartProduct){
@@ -419,8 +424,35 @@
 
       const indexOfProduct = thisCart.products.indexOf(cartProduct);
       thisCart.products.splice(indexOfProduct, 1);
-      thisCart.update();  //RangeError: Maximum call stack size exceeded.
+      thisCart.update();  
       cartProduct.dom.wrapper.parentNode.removeChild(cartProduct.dom.wrapper);
+    }
+    sendOrder(){
+      const thisCart = this;
+
+      const url = settings.db.url + '/' + settings.db.orders;
+      const payload = {};
+
+      payload.phone = thisCart.dom.phone.value;
+      payload.address = thisCart.dom.address.value;
+      payload.totalPrice = thisCart.totalPrice;
+      payload.totalNumber = thisCart.totalNumber;
+      payload.subtotalPrice = thisCart.subtotalPrice;
+      payload.deliveryFee = thisCart.dom.deliveryFee;
+      payload.products = [];
+      for(let prod of thisCart.products) {
+        //console.log(prod.getData());
+        payload.products.push(prod.getData());
+      }
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      };
+      
+      fetch(url, options);
     }
   }
 
@@ -479,6 +511,18 @@
         event.preventDefault;
         thisCartProduct.remove();
       });
+    }
+    getData(){
+      const thisCartProduct = this;
+      const cartProductSummary = {};
+
+      cartProductSummary.id = thisCartProduct.id;
+      cartProductSummary.name = thisCartProduct.name;
+      cartProductSummary.amount = thisCartProduct.amount;
+      cartProductSummary.priceSingle = thisCartProduct.priceSingle;
+      cartProductSummary.price = thisCartProduct.price;
+      cartProductSummary.params = thisCartProduct.params;
+      return cartProductSummary;
     }
   }
 
