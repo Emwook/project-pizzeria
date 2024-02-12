@@ -206,38 +206,22 @@
     {
       "phone": "123",
       "address": "321",
-      "totalPrice": 80,
-      "totalNumber": 3,
-      "subtotalPrice": 60,
+      "totalPrice": 56,
+      "totalNumber": 4,
+      "subtotalPrice": 36,
       "deliveryFee": {},
       "products": [
         {
-          "id": "pizza",
-          "name": "Nonna Alba's Pizza",
-          "amount": 3,
-          "priceSingle": 20,
-          "price": 60,
+          "id": "breakfast",
+          "name": "Zia Giulia's Breakfast",
+          "amount": 4,
+          "priceSingle": 9,
+          "price": 36,
           "params": {
-            "sauce": {
-              "label": "Sauce",
+            "coffee": {
+              "label": "Coffee type",
               "options": {
-                "tomato": "Tomato"
-              }
-            },
-            "toppings": {
-              "label": "Toppings",
-              "options": {
-                "olives": "Olives",
-                "redPeppers": "Red peppers",
-                "greenPeppers": "Green peppers",
-                "mushrooms": "Mushrooms",
-                "basil": "Fresh basil"
-              }
-            },
-            "crust": {
-              "label": "pizza crust",
-              "options": {
-                "standard": "standard"
+                "latte": "Latte"
               }
             }
           }
@@ -248,38 +232,22 @@
     {
       "phone": "123",
       "address": "321",
-      "totalPrice": 80,
-      "totalNumber": 3,
-      "subtotalPrice": 60,
+      "totalPrice": 56,
+      "totalNumber": 4,
+      "subtotalPrice": 36,
       "deliveryFee": {},
       "products": [
         {
-          "id": "pizza",
-          "name": "Nonna Alba's Pizza",
-          "amount": 3,
-          "priceSingle": 20,
-          "price": 60,
+          "id": "breakfast",
+          "name": "Zia Giulia's Breakfast",
+          "amount": 4,
+          "priceSingle": 9,
+          "price": 36,
           "params": {
-            "sauce": {
-              "label": "Sauce",
+            "coffee": {
+              "label": "Coffee type",
               "options": {
-                "tomato": "Tomato"
-              }
-            },
-            "toppings": {
-              "label": "Toppings",
-              "options": {
-                "olives": "Olives",
-                "redPeppers": "Red peppers",
-                "greenPeppers": "Green peppers",
-                "mushrooms": "Mushrooms",
-                "basil": "Fresh basil"
-              }
-            },
-            "crust": {
-              "label": "pizza crust",
-              "options": {
-                "standard": "standard"
+                "latte": "Latte"
               }
             }
           }

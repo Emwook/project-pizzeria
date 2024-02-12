@@ -54,6 +54,8 @@ Handlebars.registerHelper('joinValues', function(input, options) { //BUGGED - NO
   return Object.values(input).join(options.fn(this));
 });
 
+export default utils;
+
 
 
 
