@@ -33,6 +33,26 @@ class DatePicker extends BaseWidget{
       },
     });
   }
+  
+  get value(){
+    const thisWidget = this;
+
+    return thisWidget.correctValue;
+  }
+
+  set value(value){
+    const thisWidget = this;
+
+    const newValue = String(value);
+
+    if(thisWidget.correctValue !== newValue && thisWidget.isValid(value)){
+      thisWidget.correctValue = newValue;
+      thisWidget.announce();
+    }
+    thisWidget.renderValue();
+  }
+  
+
   parseValue(value){
     return value;
   }
