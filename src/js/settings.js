@@ -43,6 +43,12 @@ export const select = {
     peopleAmount: '.people-amount',
     hoursAmount: '.hours-amount',
     tables: '.floor-plan .table',
+    selectedTable: '.selected',
+    floorPlan: '.floor-plan',
+    phoneInput: 'input[name="phone"]',
+    addressInput: 'input[name="address"]',
+    checkbox: '.checkbox input',
+    submitButton: '.order-confirmation button',  
   },
   nav: {
     links: '.main-nav a',
@@ -78,6 +84,7 @@ export const classNames = {
   booking: {
     loading: 'loading',
     tableBooked: 'booked',
+    tableSelected: 'selected',
   },
   nav: {
     active: 'active',
