@@ -20,6 +20,7 @@
           <h2 class="logo__subtitle">the best homemade Italian food</h2>
         </div>
         <div class="main-nav">
+          <a href="#homepage">Home</a>
           <a href="#order">Order</a>
           <a href="#booking">Booking</a>
         </div>
@@ -60,6 +61,26 @@
     </div>
   </header>
     <div id="pages">
+      <section id="homepage">
+        <div id = "home-card-list" class="home-cards container">
+          <div class="picture-container">
+            <span class="title-box" id="order-box-title">ORDER ONLINE</span>
+            <span class="subtitle-box" id="order-box-subtitle">Lorem ipsum dolor sit amet.</span>
+            <img src="images/homepage/pizza-1.jpg">
+          </div>
+          <div class="picture-container">
+            <span class="title-box" id="booking-box-title">BOOK A TABLE</span>
+            <span class="subtitle-box" id="booking-box-subtitle">Lorem ipsum dolor sit amet.</span>
+            <img src="images/homepage/pizza-2.jpg">
+          </div>
+          <div class="info-container" >
+            <span class="info-title">OPENING HOURS:</span>
+            <span class="info-subtitle">TUE-SUN, 12PM-12AM</span>
+          </div>
+        </div>
+        <div id="home-carousel container"></div>
+        <div id="home-pictures container"></div>
+      </section>
       <section id="order">
         <div id="product-list" class="product-list container"></div>
       </section>
@@ -172,6 +193,7 @@
 
       </article> <!-- .product -->
     </script>
+
     <script id="template-booking-widget" type="text/x-handlebars-template">
       <div class="booking-widget">
         <h2 class="page__title no-spacing">Book a table</h2>

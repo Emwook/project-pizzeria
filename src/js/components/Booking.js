@@ -110,7 +110,7 @@ class Booking{
   
       thisBooking.booked[date][hourBlock].push(table);
     }
-    console.log(thisBooking.booked);
+    //console.log(thisBooking.booked);
   }
 
   updateDOM(){
@@ -228,12 +228,12 @@ class Booking{
     const checkboxes = thisBooking.dom.wrapper.querySelectorAll(select.booking.checkbox);
     payload.starters = [];
     for(let checkbox of checkboxes){
-      console.log(checkbox);
+      //console.log(checkbox);
       if(checkbox.checked){
         payload.starters.push(checkbox.value);
       }
     }
-    console.log(payload);
+    //console.log(payload);
     
     const options = {
       method: 'POST',
