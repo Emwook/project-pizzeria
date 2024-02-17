@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link rel="stylesheet" href="vendor/range-slider.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css">
 </head>
 <body>
   <header class="header">
@@ -62,24 +64,104 @@
   </header>
     <div id="pages">
       <section id="homepage">
-        <div id = "home-card-list" class="home-cards container">
+        <div id="card-list" class="cards container">
           <div class="picture-container">
-            <span class="title-box" id="order-box-title">ORDER ONLINE</span>
+            <a href="#order" class="title-box" id="order-box-title">ORDER ONLINE</a>
             <span class="subtitle-box" id="order-box-subtitle">Lorem ipsum dolor sit amet.</span>
-            <img src="images/homepage/pizza-1.jpg">
+            <img src="images/homepage/pizza-1.jpg" alt="">
           </div>
           <div class="picture-container">
-            <span class="title-box" id="booking-box-title">BOOK A TABLE</span>
+            <a href="#booking" class="title-box" id="booking-box-title">BOOK A TABLE</a>
             <span class="subtitle-box" id="booking-box-subtitle">Lorem ipsum dolor sit amet.</span>
-            <img src="images/homepage/pizza-2.jpg">
+            <img src="images/homepage/pizza-2.jpg" alt="">
           </div>
           <div class="info-container" >
             <span class="info-title">OPENING HOURS:</span>
             <span class="info-subtitle">TUE-SUN, 12PM-12AM</span>
           </div>
         </div>
-        <div id="home-carousel container"></div>
-        <div id="home-pictures container"></div>
+        <div class="carousel container" data-flickity='{ "cellAlign": "left", "autoPlay": 3000, "wrapAround": true, "prevNextButtons": false,"pauseAutoPlayOnHover": false}'>
+          <div class="carousel-cell">
+            <img src="images/homepage/pizza-3.jpg" alt="">
+            <div class="carousel-text">
+              <span class="carousel-title">AMAZING SERVICE!</span>
+              <p class="carousel-paragraph">
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. In excepturi, esse inventore,
+                id tempora numquam voluptatibus, asperiores iusto aspernatur similique magnam!
+              </p>
+              <span class="carousel-author">-Lorema Loremski</span>
+            </div>
+          </div>
+          <div class="carousel-cell">
+            <img src="images/homepage/pizza-3.jpg" alt="">
+            <div class="carousel-text">
+              <span class="carousel-title">GREAT VENUE!</span>
+              <p class="carousel-paragraph">
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. In excepturi, esse inventore,
+                id tempora numquam voluptatibus, asperiores iusto aspernatur similique magnam!
+              </p>
+              <span class="carousel-author">-Lorema Loremski</span>
+            </div>
+          </div>
+          <div class="carousel-cell">
+            <img src="images/homepage/pizza-3.jpg" alt="">
+            <div class="carousel-text">
+              <span class="carousel-title">TASTY SNACKS!</span>
+              <p class="carousel-paragraph">
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. In excepturi, esse inventore,
+                id tempora numquam voluptatibus, asperiores iusto aspernatur similique magnam!
+              </p>
+              <span class="carousel-author">-Lorema Loremski</span>
+            </div>
+          </div>
+        </div>
+        <div class="pictures container">
+          <div class="picture-box">
+            <img src="images/homepage/pizza-4.jpg" alt="">
+            <div class="icons-on-hover">
+              <a href="#like" aria-hidden="true"><span class="hidden">like</span><i class="fa-solid fa-heart"></i></a>
+              <a href="#share" aria-hidden="true"><span class="hidden">share</span><i class="fa-solid fa-share-nodes"></i></a>
+            </div>
+          </div>
+          <div class="picture-box">
+            <img src="images/homepage/pizza-5.jpg" alt="">
+            <div class="icons-on-hover">
+              <a href="#like" aria-hidden="true"><span class="hidden">like</span><i class="fa-solid fa-heart"></i></a>
+              <a href="#share" aria-hidden="true"><span class="hidden">share</span><i class="fa-solid fa-share-nodes"></i></a>
+            </div>
+          </div>
+          <div class="picture-box">
+            <img src="images/homepage/pizza-6.jpg" alt="">
+            <div class="icons-on-hover">
+              <a href="#like" aria-hidden="true"><span class="hidden">like</span><i class="fa-solid fa-heart"></i></a>
+              <a href="#share" aria-hidden="true"><span class="hidden">share</span><i class="fa-solid fa-share-nodes"></i></a>
+            </div>
+          </div>
+          <div class="picture-box">
+            <img src="images/homepage/pizza-7.jpg" alt="">
+            <div class="icons-on-hover">
+              <a href="#like" aria-hidden="true"><span class="hidden">like</span><i class="fa-solid fa-heart"></i></a>
+              <a href="#share" aria-hidden="true"><span class="hidden">share</span><i class="fa-solid fa-share-nodes"></i></a>
+            </div>
+          </div>
+          <div class="picture-box">
+            <img src="images/homepage/pizza-8.jpg" alt="">
+            <div class="icons-on-hover">
+              <a href="#like" aria-hidden="true"><span class="hidden">like</span><i class="fa-solid fa-heart"></i></a>
+              <a href="#share" aria-hidden="true"><span class="hidden">share</span><i class="fa-solid fa-share-nodes"></i></a>
+            </div>
+          </div>
+          <div class="picture-box">
+            <img src="images/homepage/pizza-9.jpg" alt="">
+            <div class="icons-on-hover">
+              <a href="#like" aria-hidden="true"><span class="hidden">like</span><i class="fa-solid fa-heart"></i></a>
+              <a href="#share" aria-hidden="true"><span class="hidden">share</span><i class="fa-solid fa-share-nodes"></i></a>
+            </div>
+          </div>
+          <div class="link-for-more">
+            <a href="#instagram">View more on Instagram!</a>
+          </div>
+        </div>
       </section>
       <section id="order">
         <div id="product-list" class="product-list container"></div>
@@ -263,6 +345,7 @@
   <script src="vendor/range-slider.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
+  <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
   <script src="js/app.js" type="module"></script>
 </body>
 </html>
